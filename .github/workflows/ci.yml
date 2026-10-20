@@ -14,7 +14,7 @@ jobs:
       matrix:
         python: ['3.11', '3.13']
     env:
-      WATCHLIST_FILE: ${{ runner.temp }}/financial-asset-monitor/watchlist.json
+      WATCHLIST_FILE: ${{ github.workspace }}/.ci-data/watchlist.json
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
