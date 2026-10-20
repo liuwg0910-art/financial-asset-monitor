@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101d30">
+<title>数据说明 · 金融资产监控看板</title>
+<link rel="stylesheet" href="css/style.css?brand=20261020-readable&amp;v=20261020-basis-resilience">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="金融资产监控看板 首页"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name">金融资产<span class="brand-light">监控看板</span></span><small>多市场行情与预警</small></span></a>
+    <div class="header-inner">
+      <div class="breadcrumb">市场数据 <span>/</span> <strong>数据说明</strong></div>
+      <div class="header-meta"><span class="status" id="connStatus"><span class="status-dot"></span><span class="status-label">连接中</span></span><span class="header-divider"></span><span class="time" id="priceTime">--</span></div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="panel" id="sidebar">
+      <div class="workspace-label">WORKSPACE <span>个人工作区</span></div>
+      <nav class="side-nav" aria-label="主导航"><a href="index.html"><span>▦</span>行情总览<small>01</small></a><a href="index.html#watchlist"><span>☆</span>自选行情<small>02</small></a><a href="basis.html"><span>∿</span>IC / IM贴水<small>03</small></a><a href="alerts.html"><span>♧</span>预警中心<small>04</small></a><a class="nav-active" aria-current="page" href="data.html"><span>≡</span>数据说明<small>05</small></a></nav>
+      <div class="panel-section panel-grow"><div class="panel-label-row"><span class="panel-label">我的关注</span><span class="count" id="countBadge">0</span></div><ul class="sym-list" id="symbolList"></ul></div>
+      <div class="panel-section add-section"><div class="panel-label-row"><label class="panel-label" for="inputSymbol">添加自选</label><span class="subtle-plus">＋</span></div><div class="add-group"><div class="symbol-search"><input class="input" id="inputSymbol" aria-label="标的名称或代码" placeholder="名称或代码，如 招商银行" maxlength="40" autocomplete="off" spellcheck="false" aria-controls="symbolSuggestions" aria-expanded="false"><div class="symbol-suggestions" id="symbolSuggestions" aria-label="匹配的标的" hidden></div></div><input class="input" id="inputName" aria-label="标的名称" placeholder="自定义名称（可选）" maxlength="30" autocomplete="off"><button class="btn-add" id="btnAdd">添加到自选 <span>＋</span></button></div><p class="add-hint">支持国内、国际期货。可搜索螺纹钢、沪金或合约代码；候选合约以添加验证为准。</p></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> 金融资产监控看板 <small>V2.0</small></div>
+    </aside>
+    <main class="main subpage" id="overview"><section class="page-heading"><div><p class="eyebrow">DATA GUIDE</p><h1>数据说明<span class="heading-dot">.</span></h1><p class="page-description">了解行情来源、价格口径与预警使用方法。</p></div><a class="refresh-button" href="index.html">返回行情首页 ↗</a></section><div class="guide-grid">
+<section class="guide-card"><span class="eyebrow">01 / MARKET DATA</span><h2>行情来源与更新</h2><p>自选股票、指数及贵金属报价来自新浪财经，加密货币来自Binance，国际商品期货来自Yahoo Finance，国内期货来自新浪财经。自选行情约15秒刷新一次，全球市场约60秒刷新一次。</p><p>公开行情可能延迟。期货卡片显示数据源最近成交时间，其他卡片显示获取报价的时间；全球市场表显示数据源最近成交时间（北京时间），休市时不刷新成交时间。</p></section>
+<section class="guide-card"><span class="eyebrow">02 / PRICE CONVENTIONS</span><h2>价格、单位与涨跌</h2><p>红色表示上涨，绿色表示下跌。卡片上的涨跌幅采用行情源口径：股票通常相对前收盘价，加密货币采用过去24小时变化。</p><p>各市场按原币种报价，不宜直接比较数值大小。股指以点数显示；大宗商品表中分别标注综合指数、期货及对应报价单位。</p></section>
+<section class="guide-card"><span class="eyebrow">03 / HISTORICAL CHARTS</span><h2>历史K线与迷你走势</h2><p>历史K线来自Yahoo Finance、腾讯财经及Binance。恒生科技指数目前提供日线；其他已支持品种可在详情中切换周期。</p><p>Yahoo的4小时线由真实小时数据按UTC窗口聚合。最后一根K线可能尚未收盘。卡片迷你曲线只记录打开页面后收到的价格，刷新页面会重新采样。</p></section>
+<section class="guide-card"><span class="eyebrow">04 / COMMODITIES</span><h2>期货合约与商品基准</h2><p>在侧栏搜索布伦特、WTI、黄金、天然气、铜或农产品，可选择连续合约（如BZ=F）或指定交割月（如GCZ26.CMX）。交割月候选以行情源实际挂牌和可用报价为准，添加时验证。同时支持国内商品、股指及国债期货：例如螺纹钢RB0（主力连续）、RB2701（2027年1月），沪金AU0、铁矿石I0、PTA及沪深300股指IF0。郑商所合约在本站统一使用四位年月编码，如TA2701。国内期货涨跌幅相对昨结算价，报价单位与交易所显示在卡片中；历史支持1分、5分、15分、1小时及日线，不跨休市时段拼接4小时线。</p><p>连续合约自动换月，可能产生跳空；指定交割月到期后需要手动添加下一合约。报价可能延迟，预警在预警中心统一设置。连续合约识别到换月时重新采样，休市或没有新成交的重复报价不积累预警窗口。</p><p>黄金、白银历史K线使用COMEX连续期货，不能视为现货历史价格；换月可能形成跳空，不进行本地补价。</p><p>全球市场包含标普GSCI综合商品指数，以及黄金、白银、铜、原油、天然气与农产品期货基准。不同报价源和合约的价格可能不同。</p></section>
+<section class="guide-card"><span class="eyebrow">05 / ALERT RULES</span><h2>波动预警如何计算</h2><p>预警计算最近指定时间窗口内的实际采样价格变化，与日涨跌幅不同。添加或恢复规则后先积累完整窗口，再开始判断；约15秒检查一次。</p><p>持续超限只通知一次，恢复后再次越线且冷却结束才重新通知。服务重启或行情中断超过一分钟会重新采样。请在<a href="alerts.html">预警中心</a>统一管理规则。</p></section>
+<section class="guide-card"><span class="eyebrow">06 / NOTIFICATIONS</span><h2>通知与运行条件</h2><p>网站内告警会显示在页面，浏览器桌面通知需要授权。微信通知需在预警中心填写Server酱Turbo的SendKey，并发送测试通知确认收信。</p><p>关闭网页后，微信推送仍由后台服务执行，电脑和服务需持续运行并联网。推送受外部服务额度和网络影响，发送结果可在告警历史中查看。</p></section>
+</div><div class="guide-disclaimer">行情仅供信息参考。请结合数据源时间、交易时段和品种单位阅读。</div>      <footer class="page-footer"><span>金融资产监控看板 <span>行情之中，看见脉络。</span></span><span>公开市场数据 · 数据可能存在延迟</span></footer>
+    </main>
+  </div>
+</div>
+<!-- 详情弹窗 -->
+<div class="backdrop" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="event.stopPropagation()">
+
+    <div class="modal-head">
+      <h2 class="modal-title" id="modalTitle">--</h2>
+      <button aria-label="关闭行情详情" class="modal-close" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="stats" id="modalStats"></div>
+
+      <div class="chart-bar">
+        <span class="chart-label">K 线走势</span>
+        <div class="intervals" id="intervalTabs">
+          <button class="intv is-active" data-interval="1m">1分</button>
+          <button class="intv" data-interval="5m">5分</button>
+          <button class="intv" data-interval="15m">15分</button>
+          <button class="intv" data-interval="1h">1时</button>
+          <button class="intv" data-interval="4h">4时</button>
+          <button class="intv" data-interval="1d">日线</button>
+        </div>
+      </div>
+
+      <p class="kline-source" id="klineSource" aria-live="polite"></p>
+      <div class="chart-box">
+        <canvas id="klineChart"></canvas>
+        <div class="chart-loading" id="chartLoading">加载中…</div>
+      </div>
+      <div class="crosshair" id="crosshairInfo"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/navigation.js?v=20261020-basis-resilience"></script>
+<script src="js/app.js?v=20261020-basis-resilience"></script>
+<script src="js/alerts.js?fix=wechat-diagnostics&amp;v=20261020-basis-resilience"></script>
+</body>
+</html>
+
+

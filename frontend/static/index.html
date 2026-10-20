@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101d30">
+<title>金融资产监控看板 · 多市场行情与预警</title>
+<link rel="stylesheet" href="css/style.css?brand=20261020-readable&amp;v=20261020-basis-resilience">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="金融资产监控看板 首页"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name">金融资产<span class="brand-light">监控看板</span></span><small>多市场行情与预警</small></span></a>
+    <div class="header-inner">
+      <div class="breadcrumb">市场数据 <span>/</span> <strong>行情总览</strong></div>
+      <div class="header-meta"><span class="status" id="connStatus"><span class="status-dot"></span><span class="status-label">连接中</span></span><span class="header-divider"></span><span class="time" id="priceTime">--</span></div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="panel" id="sidebar">
+      <div class="workspace-label">WORKSPACE <span>个人工作区</span></div>
+      <nav class="side-nav" aria-label="主导航"><a class="nav-active" href="index.html"><span>▦</span>行情总览<small>01</small></a><a href="index.html#watchlist"><span>☆</span>自选行情<small>02</small></a><a href="basis.html"><span>∿</span>IC / IM贴水<small>03</small></a><a href="alerts.html"><span>♧</span>预警中心<small>04</small></a><a href="data.html"><span>≡</span>数据说明<small>05</small></a></nav>
+      <div class="panel-section panel-grow"><div class="panel-label-row"><span class="panel-label">我的关注</span><span class="count" id="countBadge">0</span></div><ul class="sym-list" id="symbolList"></ul></div>
+      <div class="panel-section add-section"><div class="panel-label-row"><label class="panel-label" for="inputSymbol">添加自选</label><span class="subtle-plus">＋</span></div><div class="add-group"><div class="symbol-search"><input class="input" id="inputSymbol" aria-label="标的名称或代码" placeholder="名称或代码，如 招商银行" maxlength="40" autocomplete="off" spellcheck="false" aria-controls="symbolSuggestions" aria-expanded="false"><div class="symbol-suggestions" id="symbolSuggestions" aria-label="匹配的标的" hidden></div></div><input class="input" id="inputName" aria-label="标的名称" placeholder="自定义名称（可选）" maxlength="30" autocomplete="off"><button class="btn-add" id="btnAdd">添加到自选 <span>＋</span></button></div><p class="add-hint">支持国内、国际期货。可搜索螺纹钢、沪金或合约代码；候选合约以添加验证为准。</p></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> 金融资产监控看板 <small>V2.0</small></div>
+    </aside>
+    <main class="main" id="overview">
+      <section class="page-heading"><div><p class="eyebrow">MARKET OVERVIEW</p><h1>全球行情总览<span class="heading-dot">.</span></h1><p class="page-description">连接全球市场，让每一次价格变化清晰可见。</p></div><a class="refresh-button" id="btnAlerts" href="alerts.html">预警中心 <span id="alertRuleCount">0</span></a><button class="refresh-button" id="btnRefresh"><span>↻</span> 同步行情</button></section>
+      <section class="overview-band" aria-label="自选行情概况"><div class="overview-intro"><span class="band-kicker">YOUR MARKET, AT A GLANCE</span><h2>自选市场快照</h2><p>基于当前自选标的的最新报价</p></div><div class="overview-metrics"><div class="overview-metric"><span>关注标的</span><strong id="summaryTotal">0<small>项</small></strong></div><div class="overview-metric"><span><i class="metric-dot rising"></i>上涨</span><strong class="up" id="summaryUp">--</strong></div><div class="overview-metric"><span><i class="metric-dot falling"></i>下跌</span><strong class="down" id="summaryDown">--</strong></div><div class="overview-metric"><span>平盘 / 待更新</span><strong id="summaryOther">--</strong></div></div></section>
+      <section class="market-section" id="watchlist"><div class="section-heading"><div><span class="section-number">01</span><h2>自选行情</h2><span class="section-subtitle">WATCHLIST</span></div><span class="section-caption">红涨绿跌 <span>·</span> 约 15 秒刷新</span></div>
+        <div id="alertBanner" class="alert-banner" role="alert" hidden></div>
+        <div class="toolbar"><div class="chips" id="filterTabs"><button class="chip is-active" data-filter="all">全部市场</button><button class="chip" data-filter="stock">股票 / 指数</button><button class="chip" data-filter="metal">贵金属</button><button class="chip" data-filter="futures">期货合约</button><button class="chip" data-filter="crypto">加密货币</button></div><div class="search-row"><span>⌕</span><input class="input" id="inputFilter" aria-label="搜索自选标的" placeholder="搜索代码或名称" maxlength="30"></div></div>
+        <div class="grid" id="cardGrid"><div class="empty" id="emptyState"><p class="empty-text">正在载入自选行情</p><p class="empty-hint">连接市场数据源中…</p></div></div>
+      </section>
+      <div class="detail-layout"><section class="quote-section" id="globalMarkets"><div class="section-heading"><div><span class="section-number">02</span><h2>全球市场</h2></div><span class="section-caption" id="globalMarketStatus">连接行情源…</span></div><div class="global-tabs" aria-label="全球行情分类"><button class="global-tab is-active" data-category="index" aria-pressed="true">全球主要股指</button><button class="global-tab" data-category="commodity" aria-pressed="false">大宗商品基准</button></div><div class="table-scroll global-table-scroll"><table class="quote-table global-quote-table"><thead><tr><th>指数 / 品种</th><th>最新价</th><th>涨跌幅</th><th>报价时间</th></tr></thead><tbody id="quoteTable"><tr><td colspan="4" class="table-empty">正在获取全球市场行情…</td></tr></tbody></table></div><div class="table-footnote" id="globalMarketNote">股指以点数显示，商品包含综合指数及期货价格，单位分别标注；休市时显示最近报价。来源：Yahoo Finance，时间为北京时间。</div></section><aside class="distribution-section"><div class="section-heading"><div><span class="section-number">03</span><h2>市场分布</h2></div></div><p class="distribution-caption">自选标的数量分布</p><div class="distribution-bar" id="distributionBar"></div><div id="marketDistribution" class="distribution-list"></div><div class="distribution-note">覆盖多元市场<br><span>统一视图，独立报价</span></div></aside></div>
+
+
+
+      <footer class="page-footer"><span>金融资产监控看板 <span>行情之中，看见脉络。</span></span><span>公开市场数据 · 数据可能存在延迟</span></footer>
+    </main>
+  </div>
+</div>
+<!-- 详情弹窗 -->
+<div class="backdrop" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="event.stopPropagation()">
+
+    <div class="modal-head">
+      <h2 class="modal-title" id="modalTitle">--</h2>
+      <button aria-label="关闭行情详情" class="modal-close" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="stats" id="modalStats"></div>
+
+      <div class="chart-bar">
+        <span class="chart-label">K 线走势</span>
+        <div class="intervals" id="intervalTabs">
+          <button class="intv is-active" data-interval="1m">1分</button>
+          <button class="intv" data-interval="5m">5分</button>
+          <button class="intv" data-interval="15m">15分</button>
+          <button class="intv" data-interval="1h">1时</button>
+          <button class="intv" data-interval="4h">4时</button>
+          <button class="intv" data-interval="1d">日线</button>
+        </div>
+      </div>
+
+      <p class="kline-source" id="klineSource" aria-live="polite"></p>
+      <div class="chart-box">
+        <canvas id="klineChart"></canvas>
+        <div class="chart-loading" id="chartLoading">加载中…</div>
+      </div>
+      <div class="crosshair" id="crosshairInfo"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/navigation.js?v=20261020-basis-resilience"></script>
+<script src="js/app.js?v=20261020-basis-resilience"></script>
+<script src="js/alerts.js?fix=wechat-diagnostics&amp;v=20261020-basis-resilience"></script>
+</body>
+</html>
+
+

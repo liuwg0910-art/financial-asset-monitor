@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.13']
+    env:
+      WATCHLIST_FILE: ${{ runner.temp }}/financial-asset-monitor/watchlist.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: |
+          python -m pip install -r backend/requirements.txt
+          mkdir -p "$(dirname "$WATCHLIST_FILE")"
+      - name: Backend offline tests
+        run: python -m unittest discover -s backend/tests -p 'test_*.py'
+      - name: Frontend checks
+        run: |
+          node backend/tests/frontend_regressions.cjs
+          node backend/tests/frontend_alerts.cjs
+          for script in frontend/static/js/*.js; do node --check "$script"; done
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate and build containers
+        run: |
+          docker compose config --quiet
+          docker compose build
+      - name: Verify backend imports in image
+        run: docker compose run --rm --no-deps backend python -c "import main; print(main.app.title)"

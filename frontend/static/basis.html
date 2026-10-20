@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101d30">
+<title>IC / IM贴水监控 · 金融资产监控看板</title>
+<link rel="stylesheet" href="css/style.css?brand=20261020-readable&amp;v=20261020-basis-resilience">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="金融资产监控看板 首页"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name">金融资产<span class="brand-light">监控看板</span></span><small>多市场行情与预警</small></span></a>
+    <div class="header-inner">
+      <div class="breadcrumb">市场数据 <span>/</span> <strong>IC / IM贴水</strong></div>
+      <div class="header-meta"><span class="status" id="connStatus"><span class="status-dot"></span><span class="status-label">连接中</span></span><span class="header-divider"></span><span class="time" id="priceTime">--</span></div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="panel" id="sidebar">
+      <div class="workspace-label">WORKSPACE <span>个人工作区</span></div>
+      <nav class="side-nav" aria-label="主导航"><a href="index.html"><span>▦</span>行情总览<small>01</small></a><a href="index.html#watchlist"><span>☆</span>自选行情<small>02</small></a><a href="basis.html"><span>∿</span>IC / IM贴水<small>03</small></a><a href="alerts.html"><span>♧</span>预警中心<small>04</small></a><a class="nav-active" aria-current="page" href="data.html"><span>≡</span>数据说明<small>05</small></a></nav>
+      <div class="panel-section panel-grow"><div class="panel-label-row"><span class="panel-label">我的关注</span><span class="count" id="countBadge">0</span></div><ul class="sym-list" id="symbolList"></ul></div>
+      <div class="panel-section add-section"><div class="panel-label-row"><label class="panel-label" for="inputSymbol">添加自选</label><span class="subtle-plus">＋</span></div><div class="add-group"><div class="symbol-search"><input class="input" id="inputSymbol" aria-label="标的名称或代码" placeholder="名称或代码，如 招商银行" maxlength="40" autocomplete="off" spellcheck="false" aria-controls="symbolSuggestions" aria-expanded="false"><div class="symbol-suggestions" id="symbolSuggestions" aria-label="匹配的标的" hidden></div></div><input class="input" id="inputName" aria-label="标的名称" placeholder="自定义名称（可选）" maxlength="30" autocomplete="off"><button class="btn-add" id="btnAdd">添加到自选 <span>＋</span></button></div><p class="add-hint">支持国内、国际期货。可搜索螺纹钢、沪金或合约代码；候选合约以添加验证为准。</p></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> 金融资产监控看板 <small>V2.0</small></div>
+    </aside>
+    <main class="main subpage" id="overview"><section class="page-heading"><div><p class="eyebrow">QUARTERLY FUTURES SPREAD</p><h1>IC / IM贴水监控<span class="heading-dot">.</span></h1><p class="page-description">当季至下季的年化价差，数值越负，贴水越深。</p></div><button type="button" class="refresh-button" id="basisRefresh">↻ 刷新数据</button><a class="refresh-button" href="alerts.html?v=20261020-basis-resilience#basisAlertSettings">设置贴水预警 ↗</a></section><p id="basisStatus" class="basis-status" aria-live="polite">正在匹配季月合约…</p><section id="basisCards" class="basis-cards" aria-label="实时年化贴水"></section><section class="basis-history"><div class="section-heading"><div><h2>历史年化贴水</h2><span class="basis-legend"><i class="im"></i>IM <i class="ic"></i>IC</span></div><div class="chips"><button class="chip" data-basis-range="183">近半年</button><button class="chip is-active" data-basis-range="365">近一年</button></div></div><p id="basisHistoryStatus" class="basis-status" aria-live="polite"></p><div id="basisChart" class="basis-chart">历史曲线加载中…</div><p id="basisPoint" class="basis-point">悬停、点击或键盘选中数据点，查看两腿合约及收盘价。</p><div id="basisExtremes" class="basis-extremes"></div><p id="basisCoverage" class="basis-status"></p></section><section class="guide-card"><h2>计算口径与换仓观察</h2><p><strong>年化贴水率 =（下季合约价格 − 当季合约价格）÷ 当季合约价格 × 4 × 100%</strong></p><p>严格使用你指定的三个月固定年化口径，不按剩余天数调整。负数表示下季更便宜；正数表示升水。它不是期货对现货的基差，也不是保证金收益率。</p><p>实时采用最近成交价，历史采用两腿同日收盘价，二者分开展示。曲线缺口不补值，换季处断线。季月为3、6、9、12月，到期通常为第三个周五，法定假日顺延；已到期合约从历史末日识别，未来日期按规则估算，临近到期请核对交易所公告。</p><p>你的换仓观察原则：贴水深时关注远月，贴水浅时关注近月滚动。页面仅展示指标并按你设置的阈值通知，不执行交易。你的截图为抽样参考，与实际日线重建结果可能不同。</p><p>来源：新浪财经；合约规则参考<a href="https://www.cffex.com.cn/u/cms/www/202207/18190308vxpv.pdf" target="_blank" rel="noopener">中金所IM合约</a>。数据可能延迟或部分缺失。</p></section><footer class="page-footer"><span>金融资产监控看板</span><span>公开行情 · 贴水阈值通知</span></footer></main>
+  </div>
+</div>
+<!-- 详情弹窗 -->
+<div class="backdrop" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="event.stopPropagation()">
+
+    <div class="modal-head">
+      <h2 class="modal-title" id="modalTitle">--</h2>
+      <button aria-label="关闭行情详情" class="modal-close" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="stats" id="modalStats"></div>
+
+      <div class="chart-bar">
+        <span class="chart-label">K 线走势</span>
+        <div class="intervals" id="intervalTabs">
+          <button class="intv is-active" data-interval="1m">1分</button>
+          <button class="intv" data-interval="5m">5分</button>
+          <button class="intv" data-interval="15m">15分</button>
+          <button class="intv" data-interval="1h">1时</button>
+          <button class="intv" data-interval="4h">4时</button>
+          <button class="intv" data-interval="1d">日线</button>
+        </div>
+      </div>
+
+      <p class="kline-source" id="klineSource" aria-live="polite"></p>
+      <div class="chart-box">
+        <canvas id="klineChart"></canvas>
+        <div class="chart-loading" id="chartLoading">加载中…</div>
+      </div>
+      <div class="crosshair" id="crosshairInfo"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/navigation.js?v=20261020-basis-resilience"></script>
+<script src="js/app.js?v=20261020-basis-resilience"></script>
+<script src="js/alerts.js?fix=wechat-diagnostics&amp;v=20261020-basis-resilience"></script>
+<script src="js/basis.js?v=20261020-basis-resilience"></script>
+</body>
+</html>
+
+

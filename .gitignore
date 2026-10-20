@@ -1,0 +1,55 @@
+
+# Local notification credentials and runtime data
+backend/alerts_state.json
+backend/alerts_state.tmp
+backend/basis_snapshot.json
+backend/basis_snapshot.tmp
+__pycache__/
+*.log
+
+# Personal runtime data and credentials
+**/alerts_state.json
+**/alerts_state.tmp
+**/custom_watchlist.json
+**/custom_watchlist.json.tmp
+**/basis_snapshot.json
+**/basis_snapshot.tmp
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+data/
+backups/
+
+# Development tools and local assistant work
+.venv/
+venv/
+node_modules/
+.pytest_cache/
+.coverage
+htmlcov/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+.codex/
+.agents/
+.aws/
+.claude/
+.workbuddy/
+.presentation-build/
+.chart-data-*/
+deliverables/
+
+# Generated diagnostics, reports and private screenshots
+docs/probe_*.py
+docs/check_basis_server.py
+docs/build_basis_page.py
+docs/*_live_results.json
+docs/*.png
+docs/kline_test_report.md
+*.py[cod]
+**/alerts_state.*
+**/custom_watchlist.json.*
+**/basis_snapshot.*

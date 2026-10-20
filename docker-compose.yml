@@ -1,0 +1,24 @@
+name: financial-asset-monitor
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: fm-backend
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./backend:/app/data
+    environment:
+      WATCHLIST_FILE: /app/data/custom_watchlist.json
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: fm-frontend
+    ports:
+      - "19191:19191"
+    depends_on:
+      - backend
+    restart: unless-stopped

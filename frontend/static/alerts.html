@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101d30">
+<title>预警中心 · 金融资产监控看板</title>
+<link rel="stylesheet" href="css/style.css?brand=20261020-readable&amp;v=20261020-basis-resilience">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="金融资产监控看板 首页"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name">金融资产<span class="brand-light">监控看板</span></span><small>多市场行情与预警</small></span></a>
+    <div class="header-inner">
+      <div class="breadcrumb">市场数据 <span>/</span> <strong>预警中心</strong></div>
+      <div class="header-meta"><span class="status" id="connStatus"><span class="status-dot"></span><span class="status-label">连接中</span></span><span class="header-divider"></span><span class="time" id="priceTime">--</span></div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="panel" id="sidebar">
+      <div class="workspace-label">WORKSPACE <span>个人工作区</span></div>
+      <nav class="side-nav" aria-label="主导航"><a href="index.html"><span>▦</span>行情总览<small>01</small></a><a href="index.html#watchlist"><span>☆</span>自选行情<small>02</small></a><a href="basis.html"><span>∿</span>IC / IM贴水<small>03</small></a><a class="nav-active" aria-current="page" href="alerts.html"><span>♧</span>预警中心<small>04</small></a><a href="data.html"><span>≡</span>数据说明<small>05</small></a></nav>
+      <div class="panel-section panel-grow"><div class="panel-label-row"><span class="panel-label">我的关注</span><span class="count" id="countBadge">0</span></div><ul class="sym-list" id="symbolList"></ul></div>
+      <div class="panel-section add-section"><div class="panel-label-row"><label class="panel-label" for="inputSymbol">添加自选</label><span class="subtle-plus">＋</span></div><div class="add-group"><div class="symbol-search"><input class="input" id="inputSymbol" aria-label="标的名称或代码" placeholder="名称或代码，如 招商银行" maxlength="40" autocomplete="off" spellcheck="false" aria-controls="symbolSuggestions" aria-expanded="false"><div class="symbol-suggestions" id="symbolSuggestions" aria-label="匹配的标的" hidden></div></div><input class="input" id="inputName" aria-label="标的名称" placeholder="自定义名称（可选）" maxlength="30" autocomplete="off"><button class="btn-add" id="btnAdd">添加到自选 <span>＋</span></button></div><p class="add-hint">支持国内、国际期货。可搜索螺纹钢、沪金或合约代码；候选合约以添加验证为准。</p></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> 金融资产监控看板 <small>V2.0</small></div>
+    </aside>
+    <main class="main subpage" id="overview"><section class="page-heading"><div><p class="eyebrow">PRICE ALERTS</p><h1>预警中心<span class="heading-dot">.</span></h1><p class="page-description">集中设置价格波动规则、通知方式，查看历史告警。</p></div><a class="refresh-button" href="index.html">返回行情首页 ↗</a></section><section class="alert-center" id="alertsCenter" aria-labelledby="alertsTitle">
+    <div class="section-heading"><div><span class="section-number">01</span><h2 id="alertsTitle" tabindex="-1">预警中心</h2></div><span class="section-caption">规则 · 通知 · 告警历史</span></div>
+    <div class="alert-center-body">
+      <p class="alert-intro">当自选标的在指定时间窗口内涨跌达到阈值，自动记录告警并通知。</p>
+      <form id="alertRuleForm" class="alert-rule-form">
+        <label>自选标的<select id="alertSymbol" required></select></label>
+        <label>时间窗口（分钟）<input id="alertWindow" type="number" value="5" min="1" max="1440" step="1" required></label>
+        <label>涨跌幅（%）<input id="alertThreshold" type="number" value="1" min="0.01" max="1000" step="0.01" required></label>
+        <label>触发方向<select id="alertDirection"><option value="both">上涨或下跌</option><option value="up">仅上涨</option><option value="down">仅下跌</option></select></label>
+        <label>通知冷却（分钟）<input id="alertCooldown" type="number" value="5" min="1" max="1440" step="1" required></label>
+        <button class="alert-primary" type="submit" id="saveAlertRule">添加预警规则</button>
+      </form>
+      <p class="alert-help">启用后开始采样，采满窗口后判断，约15秒检查一次；实际窗口可能比设置值多约45秒。持续超限仅通知一次，恢复后再次越线才会重新触发，且受冷却时间限制。服务需保持运行。</p>
+      <div class="alert-section-title"><h3>已配置规则</h3><span>最多50条</span></div>
+      <div id="alertRules" class="alert-rules"></div>
+      <section id="basisAlertSettings"><div class="alert-section-title"><h3>IC / IM年化贴水阈值</h3><a href="basis.html">查看贴水监控 ↗</a></div><p class="alert-help">直接比较带符号年化贴水，例如≤−10%表示贴水深于10%，≥−7%表示贴水浅于7%。达到条件首次通知，持续满足不重复；退出条件后再进入才重新通知，并受冷却限制。仅两腿同日、相差不超过60秒且均在2分钟内的报价参与告警。无需先添加到自选。</p><form id="basisRuleForm" class="alert-rule-form"><label>品种<select id="basisSymbol"><option>IC</option><option>IM</option></select></label><label>条件<select id="basisOperator"><option value="lte">≤（贴水更深）</option><option value="gte">≥（贴水更浅）</option></select></label><label>年化贴水（带符号%）<input id="basisThreshold" type="number" min="-100" max="100" step="0.1" value="-10" required></label><label>冷却（分钟）<input id="basisCooldown" type="number" min="1" max="1440" value="60" required></label><button class="alert-primary" id="saveBasisRule" type="submit">添加贴水预警</button></form><div id="basisRules"></div><p class="alert-help">阈值由你自行设置。重启或重新启用后，首次有效报价若已满足条件会通知；换季后使用新的合约组合判断。微信设置与下方通知通道共用。</p></section><div class="alert-section-title"><h3>通知方式</h3><button class="alert-secondary" id="enableDesktopAlerts" type="button">启用浏览器桌面通知</button></div>
+      <p id="desktopAlertStatus" class="alert-help"></p>
+      <form id="wechatAlertForm" class="wechat-form">
+        <label class="wechat-toggle"><input type="checkbox" id="wechatEnabled"> 微信通知（Server酱 Turbo）</label>
+        <label class="wechat-key">SendKey<input id="wechatSendKey" type="password" autocomplete="new-password" placeholder="SCT开头；留空保留已保存的密钥" maxlength="210"></label>
+        <div class="wechat-actions"><button class="alert-primary" type="submit" id="saveWechatAlerts">保存微信设置</button><button class="alert-secondary" type="button" id="testWechatAlerts">发送微信测试通知</button></div>
+        <p id="wechatAlertStatus" class="alert-help"></p>
+        <p class="alert-help">先在 <a href="https://sct.ftqq.com/" target="_blank" rel="noopener noreferrer">Server酱官网</a> 绑定微信并取得SendKey，再在此保存并测试。微信推送由服务器执行，网页关闭后仍可推送；需服务器持续联网运行，并受推送服务额度限制。密钥只保存在本机服务的数据文件中，不会回显。</p>
+      </form>
+      <div class="alert-section-title"><h3>最近告警</h3><span>显示最近50条</span></div>
+      <div id="alertEvents" class="alert-events"></div>
+    </div>
+  </section>      <footer class="page-footer"><span>金融资产监控看板 <span>行情之中，看见脉络。</span></span><span>公开市场数据 · 数据可能存在延迟</span></footer>
+    </main>
+  </div>
+</div>
+<!-- 详情弹窗 -->
+<div class="backdrop" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="event.stopPropagation()">
+
+    <div class="modal-head">
+      <h2 class="modal-title" id="modalTitle">--</h2>
+      <button aria-label="关闭行情详情" class="modal-close" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="stats" id="modalStats"></div>
+
+      <div class="chart-bar">
+        <span class="chart-label">K 线走势</span>
+        <div class="intervals" id="intervalTabs">
+          <button class="intv is-active" data-interval="1m">1分</button>
+          <button class="intv" data-interval="5m">5分</button>
+          <button class="intv" data-interval="15m">15分</button>
+          <button class="intv" data-interval="1h">1时</button>
+          <button class="intv" data-interval="4h">4时</button>
+          <button class="intv" data-interval="1d">日线</button>
+        </div>
+      </div>
+
+      <p class="kline-source" id="klineSource" aria-live="polite"></p>
+      <div class="chart-box">
+        <canvas id="klineChart"></canvas>
+        <div class="chart-loading" id="chartLoading">加载中…</div>
+      </div>
+      <div class="crosshair" id="crosshairInfo"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/navigation.js?v=20261020-basis-resilience"></script>
+<script src="js/app.js?v=20261020-basis-resilience"></script>
+<script src="js/alerts.js?fix=wechat-diagnostics&amp;v=20261020-basis-resilience"></script>
+</body>
+</html>
+
+

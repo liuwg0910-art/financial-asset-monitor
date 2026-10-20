@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+tests/
+*.log
+custom_watchlist.json*
+alerts_state.*
+basis_snapshot.*
+.env*
+*.pem
+*.key
